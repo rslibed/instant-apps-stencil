@@ -1,0 +1,4 @@
+[submodule "instant-apps-components"]
+	path = packages/instant-apps-components
+	url = https://github.com/Esri/instant-apps-components.git
+	branch= master
