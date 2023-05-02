@@ -8,6 +8,7 @@ import type { JSX } from '@esri/instant-apps-components';
 import { defineCustomElements } from '@esri/instant-apps-components/loader';
 
 defineCustomElements();
+export const InstantAppsControlPanel = /*@__PURE__*/createReactComponent<JSX.InstantAppsControlPanel, HTMLInstantAppsControlPanelElement>('instant-apps-control-panel');
 export const InstantAppsExport = /*@__PURE__*/createReactComponent<JSX.InstantAppsExport, HTMLInstantAppsExportElement>('instant-apps-export');
 export const InstantAppsFilterList = /*@__PURE__*/createReactComponent<JSX.InstantAppsFilterList, HTMLInstantAppsFilterListElement>('instant-apps-filter-list');
 export const InstantAppsHeader = /*@__PURE__*/createReactComponent<JSX.InstantAppsHeader, HTMLInstantAppsHeaderElement>('instant-apps-header');
