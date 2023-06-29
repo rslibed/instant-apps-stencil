@@ -1,0 +1,51 @@
+name: Manual Publish to NPM
+
+# on manual run
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish'
+        required: true
+        default: '1.0.0'
+
+jobs:
+  build-iac:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - name: Install Dependencies
+        run: npm install
+      # init and update git submodules
+      - name: Init and update git submodules
+        run: |
+          git submodule init
+          git submodule update
+      #cd into packages/instant-apps-components and git pull from origin and then npm install
+      - name: cd into packages/instant-apps-components and git pull from origin and then npm install
+        run: |
+          cd packages/instant-apps-components
+          git pull origin master
+          npm install
+      # get version number from package.json
+      - name: get version number from package.json
+        run: |
+          cd packages/instant-apps-components
+          echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_ENV
+      - name: print out current working directory
+        run: pwd
+      - name: print out the contents of the current directory
+        run: ls -la
+      # cd into packages/instant-apps-components and npm run build
+      - name: npm run build
+        run: |
+          npm run build
+      # - name: Publish to NPM
+      #   run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
