@@ -1,13 +1,7 @@
 name: Manual Publish to NPM
 
-# on manual run
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version to publish'
-        required: true
-        default: '1.0.0'
+  workflow_dispatch
 
 jobs:
   build-iac:
@@ -18,34 +12,48 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16
-      - name: Install Dependencies
+
+      - name: Install Root Dependencies
         run: npm install
-      # init and update git submodules
-      - name: Init and update git submodules
+      - name: Git submodules
         run: |
           git submodule init
           git submodule update
-      #cd into packages/instant-apps-components and git pull from origin and then npm install
-      - name: cd into packages/instant-apps-components and git pull from origin and then npm install
+      - name: Get latest version
+        id: get_npm_version
+        run: echo ::set-output name=version::$(npm view @esri/instant-apps-components version)
+      - name: Get local version
+        id: get_local_version
+        run: echo ::set-output name=localVersion::$(node -p "require('./packages/instant-apps-components/package.json').version")
+      - name: Check if versions are the same
+        run: |
+          if [ "${{ steps.get_npm_version.outputs.version }}" = "${{ steps.get_local_version.outputs.localVersion }}" ]; then
+            echo "Versions are the same. Please update instant-apps-components package.json version, exiting"
+            exit 1
+          fi
+      - name: iac publish steps
         run: |
           cd packages/instant-apps-components
           git pull origin master
           npm install
-      # get version number from package.json
-      - name: get version number from package.json
-        run: |
-          cd packages/instant-apps-components
-          echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_ENV
-      - name: print out current working directory
-        run: pwd
-      - name: print out the contents of the current directory
-        run: ls -la
-      # cd into packages/instant-apps-components and npm run build
-      - name: npm run build
-        run: |
           npm run build
-      # - name: Publish to NPM
-      #   run: npm publish
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      
+      - name: Get latest version
+        id: get_new_npm_version
+        run: echo ::set-output name=newVersion::$(npm view @esri/instant-apps-components version)
+      - name: Update @esri/instant-apps-components in instant-apps-components-react package.json
+        run: |
+          cd packages/instant-apps-components-react
+          npm version ${{ steps.get_new_npm_version.outputs.newVersion }}
+          npm update @esri/instant-apps-components
+          cat package.json
+      - name: iac react publish steps
+        run: |
+          cd packages/instant-apps-components-react
+          npm install
+          npm run build
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
