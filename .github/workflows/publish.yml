@@ -15,10 +15,6 @@ jobs:
 
       - name: Install Root Dependencies
         run: npm install
-      - name: Git submodules
-        run: |
-          git submodule init
-          git submodule update
       - name: Get latest version
         id: get_npm_version
         run: echo ::set-output name=version::$(npm view @esri/instant-apps-components version)
@@ -37,7 +33,7 @@ jobs:
           git pull origin master
           npm install
           npm run build
-          npm publish
+
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Get latest version
@@ -54,6 +50,6 @@ jobs:
           cd packages/instant-apps-components-react
           npm install
           npm run build
-          npm publish
+        
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
