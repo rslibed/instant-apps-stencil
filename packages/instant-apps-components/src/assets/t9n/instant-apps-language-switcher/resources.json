@@ -3,5 +3,19 @@
     "headerTip": "Language switcher tip",
     "subHeader": "Translation",
     "close": "Close",
-    "saving": "Saving"
+    "saving": "Saving",
+    "collapseAll": "Collapse all",
+    "translatedLanguage": "Translated language",
+    "searchPlaceholder": "Search",
+    "noLanguage": {
+        "title": "No languages selected",
+        "message": "Select at least one language to translate."
+    },
+    "languages": {
+        "ar": "Arabic",
+        "en": "English",
+        "es": "Spanish",
+        "vi": "Vietnamese",
+        "zh-CN": "Cantonese"
+    }
 }

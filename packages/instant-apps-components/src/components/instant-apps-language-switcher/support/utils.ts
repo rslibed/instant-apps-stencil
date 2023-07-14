@@ -1,6 +1,7 @@
 import LanguageSwitcher_t9n from "../../../assets/t9n/instant-apps-language-switcher/resources.json";
 import { getLocaleComponentStrings } from "../../../utils/locale";
 import { LocaleUIData } from "./interfaces";
+import { languageSwitcherState } from "./store";
 
 // export function getLastSavedDate() {}
 
@@ -49,4 +50,8 @@ export function generateUIData(appSettings): LocaleUIData {
 export async function getMessages(el: HTMLInstantAppsLanguageSwitcherElement): Promise<typeof LanguageSwitcher_t9n> {
   const messages = await getLocaleComponentStrings(el);
   return messages[0] as typeof LanguageSwitcher_t9n;
+}
+
+export function getUIDataKeys(): string[] {
+  return Object.keys(languageSwitcherState.uiData as LocaleUIData).filter((key) => key !== "locales");
 }

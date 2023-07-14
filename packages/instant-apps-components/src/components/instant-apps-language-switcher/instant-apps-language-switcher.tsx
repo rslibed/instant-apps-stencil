@@ -3,8 +3,9 @@ import { Component, Host, Prop, h } from "@stencil/core";
 import { Element, HostElement, State } from "@stencil/core/internal";
 
 import LanguageSwitcher_t9n from "../../assets/t9n/instant-apps-language-switcher/resources.json";
-import { generateUIData, getMessages } from "./support/utils";
+import { generateUIData, getMessages, getUIDataKeys } from "./support/utils";
 import { languageSwitcherState, store } from "./support/store";
+import { LocaleSettingItem, LocaleUIData } from "./support/interfaces";
 
 const BASE = "instant-apps-language-switcher";
 
@@ -17,7 +18,7 @@ const CSS = {
   headerTip: `${BASE}__header-tip`,
   topBar: `${BASE}__top-bar`,
   topBarSection: `${BASE}__top-bar-section`,
-  minimizeSearchContainer: `${BASE}__minimize-search-container`,
+  collapseSearchContainer: `${BASE}__collapse-search-container`,
   userLangText: `${BASE}__user-lang-text`
 };
 
@@ -118,7 +119,7 @@ export class InstantAppsLanguageSwitcher {
     );
   }
 
-  renderContent() {
+  renderContent(): HTMLDivElement {
     const locales = languageSwitcherState?.uiData?.locales as string[];
     return (
       <div slot="content">
@@ -128,48 +129,65 @@ export class InstantAppsLanguageSwitcher {
     );
   }
 
-  renderTopBar() {
+  renderTopBar(): HTMLDivElement {
     return (
       <div class={CSS.topBar}>
-        <div class={CSS.topBarSection}>
-          <div class={CSS.userLangText}>English</div>
-          <div class={CSS.minimizeSearchContainer}>
-            <div>
-              <calcite-button appearance="transparent" icon-start="list-merge">
-                Minimize all
-              </calcite-button>
-            </div>
-            <div>
-              <calcite-input type="search" placeholder="Search" icon="search" />
-            </div>
-          </div>
-        </div>
-        <div class={CSS.topBarSection}>
-          <calcite-label layout="inline">
-            Translated language
-            <calcite-select>
-              <calcite-option>Arabic</calcite-option>
-              <calcite-option selected>Spanish</calcite-option>
-              <calcite-option>Vietnamese</calcite-option>
-              <calcite-option>Chinese</calcite-option>
-            </calcite-select>
-          </calcite-label>
-        </div>
+        {this.renderLeadingTopBarSection()}
+        {this.renderTrailingTopBarSection()}
+      </div>
+    );
+  }
+
+  renderLeadingTopBarSection(): HTMLDivElement {
+    const languages = this.messages?.languages;
+    return (
+      <div class={CSS.topBarSection}>
+        <div class={CSS.userLangText}>{languages?.en}</div>
+        {this.renderCollapseSearchContainer()}
+      </div>
+    );
+  }
+
+  renderCollapseSearchContainer(): HTMLDivElement {
+    return (
+      <div class={CSS.collapseSearchContainer}>
+        <calcite-button onClick={this.collapseAll} appearance="transparent" icon-start="list-merge">
+          {this.messages?.collapseAll}
+        </calcite-button>
+        <calcite-input type="search" placeholder={this.messages?.searchPlaceholder} icon="search" />
+      </div>
+    );
+  }
+
+  renderTrailingTopBarSection(): void {
+    const languages = this.messages?.languages;
+    return (
+      <div class={CSS.topBarSection}>
+        <calcite-label layout="inline">
+          {this.messages?.translatedLanguage}
+          <calcite-select>
+            <calcite-option>{languages?.ar}</calcite-option>
+            <calcite-option selected>{languages?.es}</calcite-option>
+            <calcite-option>{languages?.vi}</calcite-option>
+            <calcite-option>{languages?.["zh-CN"]}</calcite-option>
+          </calcite-select>
+        </calcite-label>
       </div>
     );
   }
 
   renderUIData(): HTMLDivElement | undefined {
     if (!languageSwitcherState?.uiData) return;
-    const uiDataKeys = Object.keys(languageSwitcherState.uiData).filter((key) => key !== "locales");
+    const uiDataKeys = getUIDataKeys();
     return <div>{uiDataKeys?.map((key) => this.renderUIDataItem(key))}</div>;
   }
 
   renderNotice(): HTMLCalciteNoticeElement {
+    const noLanguage = this.messages?.noLanguage;
     return (
       <calcite-notice open icon="exclamation-mark-triangle" kind="warning">
-        <div slot="title">No languages selected</div>
-        <div slot="message">Select at least one language to translate.</div>
+        <div slot="title">{noLanguage?.title}</div>
+        <div slot="message">{noLanguage?.message}</div>
       </calcite-notice>
     );
   }
@@ -184,5 +202,12 @@ export class InstantAppsLanguageSwitcher {
         {this.messages?.close}
       </calcite-button>
     );
+  }
+
+  collapseAll(): void {
+    const uiData = { ...languageSwitcherState.uiData };
+    const uiDataKeys = getUIDataKeys();
+    uiDataKeys.forEach((key) => ((uiData[key] as LocaleSettingItem).expanded = false));
+    store.set("uiData", { ...uiData } as LocaleUIData);
   }
 }
