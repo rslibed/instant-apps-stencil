@@ -19,41 +19,42 @@
     <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.4.2/calcite.css" />
     <script type="module" src="/build/instant-apps-components.esm.js"></script>
     <script nomodule src="/build/instant-apps-components.js"></script>
-
-    <style>
-      html,
-      body {
-        width: 100%;
-        height: 100%;
-        margin: 1em;
-        padding: 1em;
-      }
-
-      .demos {
-        display: flex;
-        flex-direction: column;
-      }
-
-      calcite-link {
-        margin: 0.5em 0;
-      }
-    </style>
   </head>
 
   <body>
-    <h3>Instant App Component Demo Apps</h3>
-    <div class="demos">
-      <calcite-link href="./instant-apps-control-panel.html">Control Panel</calcite-link>
-      <calcite-link href="./instant-apps-export.html">Export to PDF</calcite-link>
-      <calcite-link href="./instant-apps-filter-list.html">Filter List</calcite-link>
-      <calcite-link href="./instant-apps-header.html">Header</calcite-link>
-      <calcite-link href="./instant-apps-interactive-legend.html">Interactive Legend</calcite-link>
-      <calcite-link href="./instant-apps-keyboard-shortcuts.html">Keyboard Shortcuts</calcite-link>
-      <calcite-link href="./instant-apps-language-switcher.html">Language Switcher</calcite-link>
-      <calcite-link href="./instant-apps-measurement.html">Measurement</calcite-link>
-      <calcite-link href="./instant-apps-popovers.html">Popover</calcite-link>
-      <calcite-link href="./instant-apps-scoreboard.html">Scoreboard</calcite-link>
-      <calcite-link href="./instant-apps-social-share.html">Social Share</calcite-link>
-    </div>
+    <instant-apps-language-switcher id="langSwitcher"></instant-apps-language-switcher>
+    <script>
+      const langSwitcher = document.getElementById("langSwitcher");
+      console.log(langSwitcher);
+
+      const appSettings = {
+        title: {
+          type: "string",
+          label: "App title",
+          value: "AV - search config - Test",
+          uiLocation: ["about"]
+        },
+        onboardingImage: {
+          type: "string",
+          label: "Image URL to display with introduction panel",
+          value: "",
+          uiLocation: ["about"]
+        },
+        onboardingButtonText: {
+          type: "string",
+          label: "Introduction panel button text",
+          value: "Okay",
+          uiLocation: ["about"]
+        },
+        customOnboardingHTML: {
+          type: "textEditor",
+          label: "Custom onboarding HTML",
+          value:
+            "<h2><span style='color:#0079c1'>Welcome!</span></h2><p>View a location&rsquo;s attachments:</p><p>In addition to browsing through location details and attachments, use the following methods to explore the map:</p><ul><li>Select a feature on the map</li><li>If a search box is available, search for a specific feature</li></ul>",
+          uiLocation: ["about"]
+        }
+      };
+      langSwitcher.appSettings = appSettings;
+    </script>
   </body>
 </html>
