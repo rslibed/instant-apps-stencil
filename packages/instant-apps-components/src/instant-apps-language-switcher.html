@@ -23,10 +23,9 @@
 
   <body>
     <instant-apps-language-switcher id="langSwitcher"></instant-apps-language-switcher>
+    <calcite-button id="openLangSwitcher">Open language switcher</calcite-button>
     <script>
       const langSwitcher = document.getElementById("langSwitcher");
-      console.log(langSwitcher);
-
       const appSettings = {
         title: {
           type: "string",
@@ -55,6 +54,9 @@
         }
       };
       langSwitcher.appSettings = appSettings;
+
+      const openButton = document.getElementById("openLangSwitcher");
+      openButton.addEventListener("click", () => (langSwitcher.open = true));
     </script>
   </body>
 </html>

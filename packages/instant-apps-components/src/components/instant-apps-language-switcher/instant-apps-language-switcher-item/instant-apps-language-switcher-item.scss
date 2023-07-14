@@ -1,0 +1,40 @@
+:host {
+  display: block;
+  .instant-apps-language-switcher-item {
+    display: flex;
+  }
+
+  .instant-apps-language-switcher-item__section {
+    padding: 10px;
+    border-bottom: 1px solid var(--calcite-ui-border-1);
+    background-color: var(--calcite-ui-foreground-2);
+    width: 49%;
+
+    .instant-apps-language-switcher-item__top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .instant-apps-language-switcher-item__label-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .instant-apps-language-switcher-item__label {
+      display: inline-block;
+      margin-left: 10px;
+      font-size: 14px;
+      font-weight: var(--calcite-font-weight-medium);
+    }
+
+    calcite-input {
+      margin-left: 55px;
+    }
+  }
+
+  .instant-apps-language-switcher-item__section:first-child {
+    margin-right: 1%;
+  }
+}

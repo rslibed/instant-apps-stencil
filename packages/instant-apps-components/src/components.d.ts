@@ -7,7 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ActiveTool, ControlPanelComponent, ExportOutput, ExtentSelector, IMeasureConfiguration, InstantAppsPopoverMessageOverrides, LayerExpression, PopoverPlacement } from "./interfaces/interfaces";
 import { FilterMode } from "./components/instant-apps-interactive-legend/instant-apps-interactive-legend-classic/interfaces/interfaces";
-import { SettingLocaleData } from "./components/instant-apps-language-switcher/support/interfaces";
+import { LocaleSettingItem } from "./components/instant-apps-language-switcher/support/interfaces";
 import { InstantAppsPopovers } from "./components/instant-apps-popovers/instant-apps-popovers";
 import { LogicalPlacement } from "@esri/calcite-components/dist/types/utils/floating-ui";
 import { ScoreboardItem, ScoreboardMode, ScoreboardPosition } from "./components/instant-apps-scoreboard/types/interfaces";
@@ -322,7 +322,9 @@ export namespace Components {
         "open": boolean;
         "portalItem": __esri.PortalItem;
         "portalItemResourceId": string;
-        "uiData": SettingLocaleData;
+    }
+    interface InstantAppsLanguageSwitcherItem {
+        "uiDataItem": LocaleSettingItem;
     }
     interface InstantAppsMeasurement {
         "activeToolType": ActiveTool;
@@ -582,6 +584,12 @@ declare global {
         prototype: HTMLInstantAppsLanguageSwitcherElement;
         new (): HTMLInstantAppsLanguageSwitcherElement;
     };
+    interface HTMLInstantAppsLanguageSwitcherItemElement extends Components.InstantAppsLanguageSwitcherItem, HTMLStencilElement {
+    }
+    var HTMLInstantAppsLanguageSwitcherItemElement: {
+        prototype: HTMLInstantAppsLanguageSwitcherItemElement;
+        new (): HTMLInstantAppsLanguageSwitcherItemElement;
+    };
     interface HTMLInstantAppsMeasurementElement extends Components.InstantAppsMeasurement, HTMLStencilElement {
     }
     var HTMLInstantAppsMeasurementElement: {
@@ -635,6 +643,7 @@ declare global {
         "instant-apps-interactive-legend-relationship": HTMLInstantAppsInteractiveLegendRelationshipElement;
         "instant-apps-keyboard-shortcuts": HTMLInstantAppsKeyboardShortcutsElement;
         "instant-apps-language-switcher": HTMLInstantAppsLanguageSwitcherElement;
+        "instant-apps-language-switcher-item": HTMLInstantAppsLanguageSwitcherItemElement;
         "instant-apps-measurement": HTMLInstantAppsMeasurementElement;
         "instant-apps-measurement-tool": HTMLInstantAppsMeasurementToolElement;
         "instant-apps-popover": HTMLInstantAppsPopoverElement;
@@ -974,7 +983,9 @@ declare namespace LocalJSX {
         "open"?: boolean;
         "portalItem": __esri.PortalItem;
         "portalItemResourceId": string;
-        "uiData"?: SettingLocaleData;
+    }
+    interface InstantAppsLanguageSwitcherItem {
+        "uiDataItem"?: LocaleSettingItem;
     }
     interface InstantAppsMeasurement {
         "activeToolType"?: ActiveTool;
@@ -1125,6 +1136,7 @@ declare namespace LocalJSX {
         "instant-apps-interactive-legend-relationship": InstantAppsInteractiveLegendRelationship;
         "instant-apps-keyboard-shortcuts": InstantAppsKeyboardShortcuts;
         "instant-apps-language-switcher": InstantAppsLanguageSwitcher;
+        "instant-apps-language-switcher-item": InstantAppsLanguageSwitcherItem;
         "instant-apps-measurement": InstantAppsMeasurement;
         "instant-apps-measurement-tool": InstantAppsMeasurementTool;
         "instant-apps-popover": InstantAppsPopover;
@@ -1153,6 +1165,7 @@ declare module "@stencil/core" {
             "instant-apps-interactive-legend-relationship": LocalJSX.InstantAppsInteractiveLegendRelationship & JSXBase.HTMLAttributes<HTMLInstantAppsInteractiveLegendRelationshipElement>;
             "instant-apps-keyboard-shortcuts": LocalJSX.InstantAppsKeyboardShortcuts & JSXBase.HTMLAttributes<HTMLInstantAppsKeyboardShortcutsElement>;
             "instant-apps-language-switcher": LocalJSX.InstantAppsLanguageSwitcher & JSXBase.HTMLAttributes<HTMLInstantAppsLanguageSwitcherElement>;
+            "instant-apps-language-switcher-item": LocalJSX.InstantAppsLanguageSwitcherItem & JSXBase.HTMLAttributes<HTMLInstantAppsLanguageSwitcherItemElement>;
             "instant-apps-measurement": LocalJSX.InstantAppsMeasurement & JSXBase.HTMLAttributes<HTMLInstantAppsMeasurementElement>;
             "instant-apps-measurement-tool": LocalJSX.InstantAppsMeasurementTool & JSXBase.HTMLAttributes<HTMLInstantAppsMeasurementToolElement>;
             "instant-apps-popover": LocalJSX.InstantAppsPopover & JSXBase.HTMLAttributes<HTMLInstantAppsPopoverElement>;

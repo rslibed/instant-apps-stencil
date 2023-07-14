@@ -1,6 +1,7 @@
 {
     "header": "Language switcher",
-    "headerTip": "What's a cracka lackin homie?",
+    "headerTip": "Language switcher tip",
     "subHeader": "Translation",
-    "close": "Close"
+    "close": "Close",
+    "saving": "Saving"
 }

@@ -1,8 +1,8 @@
 import { createStore } from "@stencil/store";
-import { LocaleSettingItem } from "./interfaces";
+import { LocaleSettingItem, LocaleUIData } from "./interfaces";
 
 interface LanguageSwitcherState {
-  uiData: LocaleSettingItem[] | null;
+  uiData: LocaleUIData | null;
   currentLanguage: string | null;
   lastSave: string | null;
   saving: boolean;
