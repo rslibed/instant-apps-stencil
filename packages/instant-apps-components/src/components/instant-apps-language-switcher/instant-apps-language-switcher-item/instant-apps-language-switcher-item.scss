@@ -14,7 +14,6 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 10px;
     }
 
     .instant-apps-language-switcher-item__label-container {
@@ -30,8 +29,13 @@
     }
 
     calcite-input {
+      margin-top: 10px;
       margin-left: 55px;
     }
+  }
+
+  .instant-apps-language-switcher-item__section--selected {
+    background-color: #f1faff;
   }
 
   .instant-apps-language-switcher-item__section:first-child {

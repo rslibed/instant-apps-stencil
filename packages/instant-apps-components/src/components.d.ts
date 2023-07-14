@@ -7,7 +7,6 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ActiveTool, ControlPanelComponent, ExportOutput, ExtentSelector, IMeasureConfiguration, InstantAppsPopoverMessageOverrides, LayerExpression, PopoverPlacement } from "./interfaces/interfaces";
 import { FilterMode } from "./components/instant-apps-interactive-legend/instant-apps-interactive-legend-classic/interfaces/interfaces";
-import { LocaleSettingItem } from "./components/instant-apps-language-switcher/support/interfaces";
 import { InstantAppsPopovers } from "./components/instant-apps-popovers/instant-apps-popovers";
 import { LogicalPlacement } from "@esri/calcite-components/dist/types/utils/floating-ui";
 import { ScoreboardItem, ScoreboardMode, ScoreboardPosition } from "./components/instant-apps-scoreboard/types/interfaces";
@@ -324,7 +323,7 @@ export namespace Components {
         "portalItemResourceId": string;
     }
     interface InstantAppsLanguageSwitcherItem {
-        "uiDataItem": LocaleSettingItem;
+        "fieldName": string;
     }
     interface InstantAppsMeasurement {
         "activeToolType": ActiveTool;
@@ -985,7 +984,7 @@ declare namespace LocalJSX {
         "portalItemResourceId": string;
     }
     interface InstantAppsLanguageSwitcherItem {
-        "uiDataItem"?: LocaleSettingItem;
+        "fieldName"?: string;
     }
     interface InstantAppsMeasurement {
         "activeToolType"?: ActiveTool;

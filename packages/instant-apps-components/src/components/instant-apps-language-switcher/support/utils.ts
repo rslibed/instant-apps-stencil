@@ -32,9 +32,16 @@ export function generateUIData(appSettings): LocaleUIData {
         vi: null,
         "zh-CN": null
       },
-      expanded: true
+      expanded: true,
+      selected: false
     };
   });
+
+  const noneSelected = settingKeys.every((key) => !uiData[key].selected);
+
+  if (noneSelected) {
+    uiData[settingKeys[0]].selected = true;
+  }
 
   return uiData;
 }

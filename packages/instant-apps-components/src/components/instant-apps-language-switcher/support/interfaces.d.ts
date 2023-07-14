@@ -7,6 +7,7 @@ interface LocaleSettingItem {
   userLocaleData: LocaleData;
   translatedLocaleData: SettingLocaleData;
   expanded: boolean;
+  selected: boolean;
 }
 
 export interface SettingLocaleData {

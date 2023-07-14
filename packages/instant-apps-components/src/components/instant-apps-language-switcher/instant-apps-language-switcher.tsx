@@ -5,7 +5,6 @@ import { Element, HostElement, State } from "@stencil/core/internal";
 import LanguageSwitcher_t9n from "../../assets/t9n/instant-apps-language-switcher/resources.json";
 import { generateUIData, getMessages } from "./support/utils";
 import { languageSwitcherState, store } from "./support/store";
-import { LocaleSettingItem } from "./support/interfaces";
 
 const BASE = "instant-apps-language-switcher";
 
@@ -120,7 +119,6 @@ export class InstantAppsLanguageSwitcher {
   }
 
   renderContent() {
-    console.log();
     const locales = languageSwitcherState?.uiData?.locales as string[];
     return (
       <div slot="content">
@@ -148,7 +146,7 @@ export class InstantAppsLanguageSwitcher {
         </div>
         <div class={CSS.topBarSection}>
           <calcite-label layout="inline">
-            Tranlated language
+            Translated language
             <calcite-select>
               <calcite-option>Arabic</calcite-option>
               <calcite-option selected>Spanish</calcite-option>
@@ -177,8 +175,7 @@ export class InstantAppsLanguageSwitcher {
   }
 
   renderUIDataItem(key: string): HTMLDivElement {
-    const uiDataItem = languageSwitcherState.uiData?.[key] as LocaleSettingItem;
-    return <instant-apps-language-switcher-item uiDataItem={uiDataItem} />;
+    return <instant-apps-language-switcher-item fieldName={key} />;
   }
 
   renderPrimaryButton(): HTMLCalciteButtonElement {
