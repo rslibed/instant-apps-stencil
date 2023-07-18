@@ -26,6 +26,9 @@ export class InstantAppsLanguageSwitcherItem {
   @Prop()
   fieldName: string;
 
+  @Prop()
+  translatedLanguageLabel: string;
+
   render() {
     const uiDataItem = this.getUIDataItem() as LocaleSettingItem;
     return (
@@ -66,8 +69,6 @@ export class InstantAppsLanguageSwitcherItem {
 
   renderTranslatedLanguageSection(): HTMLDivElement {
     const uiDataItem = this.getUIDataItem() as LocaleSettingItem;
-    const userLocaleData = uiDataItem?.userLocaleData;
-    const label = userLocaleData?.label;
     const isSelected = uiDataItem?.selected;
     return (
       <div class={`${CSS.section}${isSelected ? ` ${CSS.selected}` : ''}`}>
@@ -75,7 +76,7 @@ export class InstantAppsLanguageSwitcherItem {
           <div class={CSS.labelContainer}>
             {this.renderExpandCollapseButton()}
             <calcite-icon icon="list-button" scale="s" />
-            <span class={CSS.label}>{label}</span>
+            <span class={CSS.label}>{this.translatedLanguageLabel}</span>
           </div>
         </div>
         {uiDataItem?.expanded ? (

@@ -52,5 +52,5 @@ export async function getMessages(el: HTMLInstantAppsLanguageSwitcherElement): P
 }
 
 export function getUIDataKeys(): string[] {
-  return Object.keys(languageSwitcherState.uiData as LocaleUIData).filter(key => key !== 'locales');
+  return Object.keys(languageSwitcherState.uiData as LocaleUIData).filter(key => key !== 'locales' && key !== 'translatedLanguageLabels');
 }

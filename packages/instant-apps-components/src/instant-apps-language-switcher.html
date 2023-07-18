@@ -30,8 +30,7 @@
         introductionContent: {
           type: 'textEditor',
           label: 'Edit introduction panel',
-          value:
-            'Search to learn more about a location and its surrounding area.</br> Use one of the following search methods: <ul><li>Click the search box and type in an address or choose <b>Use current location </b></li><li>Click within the map <div></div></li></ul></br> Results will include information about features of interest.',
+          value: '',
           uiLocation: {
             section: {
               id: 'about',
@@ -61,7 +60,7 @@
         resultsPanelPreText: {
           type: 'textEditor',
           label: 'Text above results',
-          value: null,
+          value: '',
           uiLocation: {
             section: {
               id: 'nearby',
@@ -76,7 +75,7 @@
         resultsPanelPostText: {
           type: 'textEditor',
           label: 'Text below results',
-          value: null,
+          value: '',
           uiLocation: {
             section: {
               id: 'nearby',
@@ -91,7 +90,7 @@
         noResultsMessage: {
           type: 'textEditor',
           label: 'Text for no results',
-          value: '',
+          value: '<p>Keine Features gefunden, die den Suchkriterien entsprechen</p>',
           uiLocation: {
             section: {
               id: 'nearby',
@@ -146,6 +145,48 @@
               id: 'appComprehension',
               label: 'App details',
             },
+          },
+        },
+        translatedLanguageLabels: {
+          'ar': {
+            introductionContent: 'تحرير لوحة المقدمة',
+            introductionTitle: 'عنوان للمقدمة',
+            resultsPanelPreText: 'النص فوق النتائج',
+            resultsPanelPostText: 'الص أسفل النتائج',
+            noResultsMessage: 'نص لعدم ظهور نتائج',
+            splashButtonText: 'نص زر لوحة المقددمة',
+            title: 'عنوان التطبيق',
+            titleLink: 'رابط URL للعنوان',
+          },
+          'es': {
+            introductionContent: 'Editar panel de introducción',
+            introductionTitle: 'Título para la introducción',
+            resultsPanelPreText: 'Texto encima de los resultados',
+            resultsPanelPostText: 'Texto debajo de los resultados',
+            noResultsMessage: 'Texto si no hay resultados',
+            splashButtonText: 'Texto del botón del panel de introducción',
+            title: 'Título de la aplicación',
+            titleLink: 'Vínculo URL al título',
+          },
+          'vi': {
+            introductionContent: 'Chỉnh sửa bảng giới thiệu',
+            introductionTitle: 'Tiêu đề cho phần giới thiệu',
+            resultsPanelPreText: 'Văn bản trên kết quả',
+            resultsPanelPostText: 'Văn bản dưới kết quả',
+            noResultsMessage: 'Văn bản cho không có kết quả',
+            splashButtonText: 'Văn bản nút của bảng giới thiệu',
+            title: 'Tên ứng dụng',
+            titleLink: 'Liên kết URL cho tiêu đề',
+          },
+          'zh-CN': {
+            introductionContent: '编辑简介面板',
+            introductionTitle: '简介标题',
+            resultsPanelPreText: '结果上方的文本',
+            resultsPanelPostText: '结果下方的文本',
+            noResultsMessage: '没有结果时显示的文本',
+            splashButtonText: '简介面板按钮文本',
+            title: '应用程序标题',
+            titleLink: '标题 URL 链接',
           },
         },
       };

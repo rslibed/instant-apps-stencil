@@ -166,7 +166,14 @@ export class InstantAppsLanguageSwitcher {
       <div class={CSS.topBarSection}>
         <calcite-label layout="inline">
           {this.messages?.translatedLanguage}
-          <calcite-select>{this.renderTranslatedLangOptions()}</calcite-select>
+          <calcite-select
+            onCalciteSelectChange={e => {
+              const value = e.target.value;
+              store.set('currentLanguage', value);
+            }}
+          >
+            {this.renderTranslatedLangOptions()}
+          </calcite-select>
         </calcite-label>
       </div>
     );
@@ -193,7 +200,8 @@ export class InstantAppsLanguageSwitcher {
   }
 
   renderUIDataItem(key: string, keyIndex: number, uiDataKeysLen: number): HTMLDivElement {
-    return <instant-apps-language-switcher-item class={`${keyIndex === uiDataKeysLen - 1 ? CSS.lastItem : ''}`} fieldName={key} />;
+    const translatedLabel = this.appSettings.translatedLanguageLabels[languageSwitcherState.currentLanguage as string][key];
+    return <instant-apps-language-switcher-item class={`${keyIndex === uiDataKeysLen - 1 ? CSS.lastItem : ''}`} fieldName={key} translatedLanguageLabel={translatedLabel} />;
   }
 
   renderPrimaryButton(): HTMLCalciteButtonElement {

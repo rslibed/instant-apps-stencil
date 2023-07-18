@@ -325,6 +325,7 @@ export namespace Components {
     }
     interface InstantAppsLanguageSwitcherItem {
         "fieldName": string;
+        "translatedLanguageLabel": string;
     }
     interface InstantAppsMeasurement {
         "activeToolType": ActiveTool;
@@ -987,6 +988,7 @@ declare namespace LocalJSX {
     }
     interface InstantAppsLanguageSwitcherItem {
         "fieldName"?: string;
+        "translatedLanguageLabel"?: string;
     }
     interface InstantAppsMeasurement {
         "activeToolType"?: ActiveTool;
