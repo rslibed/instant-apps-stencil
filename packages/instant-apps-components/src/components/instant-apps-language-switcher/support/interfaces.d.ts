@@ -8,6 +8,7 @@ interface LocaleSettingItem {
   translatedLocaleData: SettingLocaleData;
   expanded: boolean;
   selected: boolean;
+  uiLocation: any;
 }
 
 export interface SettingLocaleData {
@@ -15,8 +16,7 @@ export interface SettingLocaleData {
 }
 
 interface LocaleData {
-  type: "string" | "richText";
+  type: 'string' | 'richText';
   label: string;
   value: string;
-  uiLocation: string[];
 }

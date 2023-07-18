@@ -1,13 +1,13 @@
-import { Component, Host, Prop, h } from "@stencil/core";
+import { Component, Host, Prop, h } from '@stencil/core';
 
-import { Element, HostElement, State } from "@stencil/core/internal";
+import { Element, HostElement, State } from '@stencil/core/internal';
 
-import LanguageSwitcher_t9n from "../../assets/t9n/instant-apps-language-switcher/resources.json";
-import { generateUIData, getMessages, getUIDataKeys } from "./support/utils";
-import { languageSwitcherState, store } from "./support/store";
-import { LocaleSettingItem, LocaleUIData } from "./support/interfaces";
+import LanguageSwitcher_t9n from '../../assets/t9n/instant-apps-language-switcher/resources.json';
+import { generateUIData, getMessages, getUIDataKeys } from './support/utils';
+import { languageSwitcherState, store } from './support/store';
+import { LocaleSettingItem, LocaleUIData } from './support/interfaces';
 
-const BASE = "instant-apps-language-switcher";
+const BASE = 'instant-apps-language-switcher';
 
 const CSS = {
   BASE,
@@ -19,13 +19,14 @@ const CSS = {
   topBar: `${BASE}__top-bar`,
   topBarSection: `${BASE}__top-bar-section`,
   collapseSearchContainer: `${BASE}__collapse-search-container`,
-  userLangText: `${BASE}__user-lang-text`
+  userLangText: `${BASE}__user-lang-text`,
+  lastItem: `${BASE}--last-item`,
 };
 
 @Component({
-  tag: "instant-apps-language-switcher",
-  styleUrl: "instant-apps-language-switcher.scss",
-  shadow: true
+  tag: 'instant-apps-language-switcher',
+  styleUrl: 'instant-apps-language-switcher.scss',
+  shadow: true,
 })
 export class InstantAppsLanguageSwitcher {
   @Element()
@@ -40,8 +41,11 @@ export class InstantAppsLanguageSwitcher {
   @Prop()
   appSettings;
 
+  @Prop()
+  translatedLanguages: string[];
+
   @Prop({
-    mutable: true
+    mutable: true,
   })
   open = false;
 
@@ -53,8 +57,8 @@ export class InstantAppsLanguageSwitcher {
 
   async componentWillLoad() {
     this.messages = await getMessages(this.el);
-    store.set("currentLanguage", "es");
-    store.set("uiData", generateUIData(this.appSettings));
+    store.set('currentLanguage', this.translatedLanguages[0]);
+    store.set('uiData', generateUIData(this.appSettings, this.translatedLanguages));
   }
 
   render(): HostElement {
@@ -68,12 +72,7 @@ export class InstantAppsLanguageSwitcher {
 
   renderModal(): HTMLCalciteModalElement {
     return (
-      <calcite-modal
-        open={this.open}
-        scale="l"
-        fullscreen={true}
-        oncalciteModalClose={() => (this.open = false)}
-      >
+      <calcite-modal open={this.open} scale="l" fullscreen={true} oncalciteModalClose={() => (this.open = false)}>
         {this.renderHeader()}
         {this.renderContent()}
         {this.renderPrimaryButton()}
@@ -151,6 +150,9 @@ export class InstantAppsLanguageSwitcher {
   renderCollapseSearchContainer(): HTMLDivElement {
     return (
       <div class={CSS.collapseSearchContainer}>
+        <calcite-button onClick={this.expandAll} appearance="transparent" icon-start="list-merge">
+          {this.messages?.expandAll}
+        </calcite-button>
         <calcite-button onClick={this.collapseAll} appearance="transparent" icon-start="list-merge">
           {this.messages?.collapseAll}
         </calcite-button>
@@ -160,26 +162,24 @@ export class InstantAppsLanguageSwitcher {
   }
 
   renderTrailingTopBarSection(): void {
-    const languages = this.messages?.languages;
     return (
       <div class={CSS.topBarSection}>
         <calcite-label layout="inline">
           {this.messages?.translatedLanguage}
-          <calcite-select>
-            <calcite-option>{languages?.ar}</calcite-option>
-            <calcite-option selected>{languages?.es}</calcite-option>
-            <calcite-option>{languages?.vi}</calcite-option>
-            <calcite-option>{languages?.["zh-CN"]}</calcite-option>
-          </calcite-select>
+          <calcite-select>{this.renderTranslatedLangOptions()}</calcite-select>
         </calcite-label>
       </div>
     );
   }
 
+  renderTranslatedLangOptions(): HTMLCalciteOptionElement[] {
+    return (languageSwitcherState.uiData?.locales as string[])?.map(locale => <calcite-option value={locale}>{this.messages?.languages?.[locale]}</calcite-option>);
+  }
+
   renderUIData(): HTMLDivElement | undefined {
     if (!languageSwitcherState?.uiData) return;
     const uiDataKeys = getUIDataKeys();
-    return <div>{uiDataKeys?.map((key) => this.renderUIDataItem(key))}</div>;
+    return <div>{uiDataKeys?.map((key, keyIndex) => this.renderUIDataItem(key, keyIndex, uiDataKeys.length))}</div>;
   }
 
   renderNotice(): HTMLCalciteNoticeElement {
@@ -192,8 +192,8 @@ export class InstantAppsLanguageSwitcher {
     );
   }
 
-  renderUIDataItem(key: string): HTMLDivElement {
-    return <instant-apps-language-switcher-item fieldName={key} />;
+  renderUIDataItem(key: string, keyIndex: number, uiDataKeysLen: number): HTMLDivElement {
+    return <instant-apps-language-switcher-item class={`${keyIndex === uiDataKeysLen - 1 ? CSS.lastItem : ''}`} fieldName={key} />;
   }
 
   renderPrimaryButton(): HTMLCalciteButtonElement {
@@ -204,10 +204,17 @@ export class InstantAppsLanguageSwitcher {
     );
   }
 
+  expandAll(): void {
+    const uiData = { ...languageSwitcherState.uiData };
+    const uiDataKeys = getUIDataKeys();
+    uiDataKeys.forEach(key => ((uiData[key] as LocaleSettingItem).expanded = true));
+    store.set('uiData', { ...uiData } as LocaleUIData);
+  }
+
   collapseAll(): void {
     const uiData = { ...languageSwitcherState.uiData };
     const uiDataKeys = getUIDataKeys();
-    uiDataKeys.forEach((key) => ((uiData[key] as LocaleSettingItem).expanded = false));
-    store.set("uiData", { ...uiData } as LocaleUIData);
+    uiDataKeys.forEach(key => ((uiData[key] as LocaleSettingItem).expanded = false));
+    store.set('uiData', { ...uiData } as LocaleUIData);
   }
 }

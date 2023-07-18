@@ -34,11 +34,37 @@
     }
   }
 
+  .instant-apps-language-switcher-item__section--last-item {
+    border-bottom: none;
+  }
+
   .instant-apps-language-switcher-item__section--selected {
     background-color: #f1faff;
   }
 
   .instant-apps-language-switcher-item__section:first-child {
     margin-right: 1%;
+  }
+
+  .instant-apps-language-switcher-item__ui-location-popover-content {
+    display: inline-block;
+    padding: 10px;
+  }
+
+  .instant-apps-language-switcher-item__ui-location-items {
+    display: flex;
+  }
+
+  .instant-apps-language-switcher-item__ui-location-item {
+    display: flex;
+    align-items: center;
+    font-weight: var(--calcite-font-weight-medium);
+    font-size: 14px;
+  }
+}
+
+:host(.instant-apps-language-switcher--last-item) {
+  .instant-apps-language-switcher-item__section {
+    border-bottom: none;
   }
 }

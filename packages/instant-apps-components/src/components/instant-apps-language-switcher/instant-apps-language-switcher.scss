@@ -1,6 +1,10 @@
 :host {
   display: block;
 
+  calcite-modal {
+    --calcite-modal-content-padding: 0;
+  }
+
   .instant-apps-language-switcher {
     &__header {
       display: flex;
@@ -30,6 +34,10 @@
     &__top-bar {
       display: flex;
       width: 100%;
+      position: sticky;
+      top: 0;
+      background: var(--calcite-ui-foreground-1);
+      z-index: 1;
 
       calcite-label {
         --calcite-label-margin-bottom: 0;

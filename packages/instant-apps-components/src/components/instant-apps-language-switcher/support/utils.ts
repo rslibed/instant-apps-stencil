@@ -1,7 +1,7 @@
-import LanguageSwitcher_t9n from "../../../assets/t9n/instant-apps-language-switcher/resources.json";
-import { getLocaleComponentStrings } from "../../../utils/locale";
-import { LocaleUIData } from "./interfaces";
-import { languageSwitcherState } from "./store";
+import LanguageSwitcher_t9n from '../../../assets/t9n/instant-apps-language-switcher/resources.json';
+import { getLocaleComponentStrings } from '../../../utils/locale';
+import { LocaleUIData } from './interfaces';
+import { languageSwitcherState } from './store';
 
 // export function getLastSavedDate() {}
 
@@ -17,28 +17,27 @@ import { languageSwitcherState } from "./store";
 
 // export function handleSuggestionSelection() {}
 
-export function generateUIData(appSettings): LocaleUIData {
+export function generateUIData(appSettings, locales: string[]): LocaleUIData {
   const settingKeys = Object.keys(appSettings);
   const uiData = {
-    locales: ["ar", "es", "vi", "zh-CN"]
+    locales,
   };
-  settingKeys.forEach((key) => {
+
+  settingKeys.forEach(key => {
+    const translatedLocaleData = {};
+    locales.forEach((locale: string) => (translatedLocaleData[locale] = null));
     const appSetting = appSettings[key];
     const { type, label, value, uiLocation } = appSetting;
     uiData[key] = {
-      userLocaleData: { type, label, value, uiLocation },
-      translatedLocaleData: {
-        ar: null,
-        es: null,
-        vi: null,
-        "zh-CN": null
-      },
+      userLocaleData: { type, label, value },
+      translatedLocaleData,
       expanded: true,
-      selected: false
+      selected: false,
+      uiLocation,
     };
   });
 
-  const noneSelected = settingKeys.every((key) => !uiData[key].selected);
+  const noneSelected = settingKeys.every(key => !uiData[key].selected);
 
   if (noneSelected) {
     uiData[settingKeys[0]].selected = true;
@@ -53,5 +52,5 @@ export async function getMessages(el: HTMLInstantAppsLanguageSwitcherElement): P
 }
 
 export function getUIDataKeys(): string[] {
-  return Object.keys(languageSwitcherState.uiData as LocaleUIData).filter((key) => key !== "locales");
+  return Object.keys(languageSwitcherState.uiData as LocaleUIData).filter(key => key !== 'locales');
 }

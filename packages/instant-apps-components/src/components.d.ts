@@ -321,6 +321,7 @@ export namespace Components {
         "open": boolean;
         "portalItem": __esri.PortalItem;
         "portalItemResourceId": string;
+        "translatedLanguages": string[];
     }
     interface InstantAppsLanguageSwitcherItem {
         "fieldName": string;
@@ -982,6 +983,7 @@ declare namespace LocalJSX {
         "open"?: boolean;
         "portalItem": __esri.PortalItem;
         "portalItemResourceId": string;
+        "translatedLanguages"?: string[];
     }
     interface InstantAppsLanguageSwitcherItem {
         "fieldName"?: string;
