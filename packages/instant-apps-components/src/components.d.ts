@@ -360,6 +360,10 @@ export namespace Components {
     }
     interface InstantAppsScoreboard {
         /**
+          * Controls the behavior to auto dock the scoreboard to the bottom in smaller parent containers/mobile devices.
+         */
+        "autoDockEnabled": boolean;
+        /**
           * Number of scoreboard items that can be viewed at a time. Minimum: 2, Maximum : 6.
          */
         "itemLimit": number;
@@ -997,6 +1001,10 @@ declare namespace LocalJSX {
         "instantAppsPopovers"?: Map<string, HTMLInstantAppsPopoverElement>;
     }
     interface InstantAppsScoreboard {
+        /**
+          * Controls the behavior to auto dock the scoreboard to the bottom in smaller parent containers/mobile devices.
+         */
+        "autoDockEnabled"?: boolean;
         /**
           * Number of scoreboard items that can be viewed at a time. Minimum: 2, Maximum : 6.
          */
